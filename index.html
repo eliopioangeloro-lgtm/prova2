@@ -10,11 +10,27 @@
   </head>
 
   <body style="margin: 0; overflow: hidden;">
+<a-scene
+  embedded
+  vr-mode-ui="enabled: false"
+  arjs="
+    sourceType: webcam;
+    sourceWidth: 1280;
+    sourceHeight: 720;
+    displayWidth: 1280;
+    displayHeight: 720;
+    trackingMethod: best;
+    debugUIEnabled: false;
+  "
+>
+<script>
+  navigator.mediaDevices.getUserMedia({
+    video: {
+      facingMode: { exact: "environment" }
+    }
+  });
+</script>
 
-    <a-scene
-      embedded
-      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
-    >
 
       <a-assets>
         <audio id="spiegazione" src="audio.mp3"></audio>
