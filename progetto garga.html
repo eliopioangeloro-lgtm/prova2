@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>AR Image Tracking</title>
+
+
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+  </head>
+
+  <body style="margin: 0; overflow: hidden;">
+
+<a-scene
+  embedded
+  vr-mode-ui="enabled: false"
+  arjs="
+    sourceType: webcam;
+    sourceWidth: 1280;
+    sourceHeight: 720;
+    displayWidth: 1280;
+    displayHeight: 720;
+    trackingMethod: best;
+    debugUIEnabled: false;
+  "
+>
+<script>
+  navigator.mediaDevices.getUserMedia({
+    video: {
+      facingMode: { exact: "environment" }
+    }
+  });
+</script>
+
+
+      <a-assets>
+        <audio id="spiegazione" src="audio.mp3"></audio>
+      </a-assets>
+
+      <a-marker
+        type="pattern"
+        url="pattern-immagine.patt"
+        emitevents="true"
+        id="marker"
+      >
+
+        <a-text
+          value="Questa è la spiegazione!"
+          position="0 0.5 0"
+          align="center"
+          color="red"
+        ></a-text>
+
+      </a-marker>
+      <a-marker
+  type="pattern"
+  url="pattern-immagine.patt"
+  emitevents="true"
+  id="marker"
+>
+
+
+      <a-entity camera></a-entity>
+    </a-scene>
+
+    <script>
+      const marker = document.querySelector("#marker");
+      const audio = document.querySelector("#spiegazione");
+
+      marker.addEventListener("markerFound", () => {
+        audio.play();
+      });
+
+      marker.addEventListener("markerLost", () => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+    </script>
+
+  </body>
+</html>
